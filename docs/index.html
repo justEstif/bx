@@ -1,34 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>bx — Fix broken ASCII diagrams</title>
-  <link rel="stylesheet" href="https://the.missing.style/v1.1.3/missing.min.css">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>bx — Fix broken ASCII diagrams</title>
+    <link rel="stylesheet" href="https://unpkg.com/missing.css@1.2.0" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <a href="https://github.com/justEstif/bx">GitHub</a>
+      </nav>
+      <h1>
+        bx
+        <sub-title
+          >Fix broken ASCII diagrams → perfect Unicode box-drawing</sub-title
+        >
+      </h1>
+      <p>Pipe-friendly CLI. Single binary. Zero dependencies.</p>
+    </header>
 
-  <header>
-    <nav>
-      <a href="https://github.com/justEstif/bx">GitHub</a>
-    </nav>
-    <h1>
-      bx
-      <sub-title>Fix broken ASCII diagrams → perfect Unicode box-drawing</sub-title>
-    </h1>
-    <p>Pipe-friendly CLI. Single binary. Zero dependencies.</p>
-  </header>
+    <main>
+      <pre><code>cat rough.txt | bx fix</code></pre>
 
-  <main>
+      <h2>Before → After</h2>
 
-    <pre><code>cat rough.txt | bx fix</code></pre>
-
-    <h2>Before → After</h2>
-
-    <div class="flex-row flex-wrap:wrap" style="gap: 1rem;">
-      <figure class="flex-grow:1">
-        <figcaption><sub-title class="allcaps">Input<v-h>: </v-h></sub-title>Rough ASCII</figcaption>
-<pre><code>+----------+       +----------+
+      <div class="flex-row flex-wrap:wrap" style="gap: 1rem">
+        <figure class="flex-grow:1">
+          <figcaption>
+            <sub-title class="allcaps">Input<v-h>: </v-h></sub-title>Rough ASCII
+          </figcaption>
+          <pre><code>+----------+       +----------+
 |  Frontend |-----&gt;|   API    |
 +----------+       +----------+
                        |
@@ -36,11 +38,14 @@
                   +---------+
                   |  Auth   |
                   +---------+</code></pre>
-      </figure>
+        </figure>
 
-      <figure class="flex-grow:1">
-        <figcaption><sub-title class="allcaps">Output<v-h>: </v-h></sub-title>Clean Unicode</figcaption>
-<pre><code>┌──────────┐    ┌─────┐
+        <figure class="flex-grow:1">
+          <figcaption>
+            <sub-title class="allcaps">Output<v-h>: </v-h></sub-title>Clean
+            Unicode
+          </figcaption>
+          <pre><code>┌──────────┐    ┌─────┐
 │ Frontend │───▶│ API │
 └──────────┘    └─────┘
                    │
@@ -48,40 +53,54 @@
                ┌──────┐
                │ Auth │
                └──────┘</code></pre>
-      </figure>
-    </div>
+        </figure>
+      </div>
 
-    <h2>Features</h2>
-    <ul>
-      <li><strong>Parses rough ASCII &amp; Unicode</strong> — tolerates misaligned corners, overflowing labels, broken edges</li>
-      <li><strong>Preserves your layout</strong> — fixes alignment without rearranging boxes</li>
-      <li><strong>4 box styles</strong> — single <code>┌─┐</code>, rounded <code>╭─╮</code>, double <code>╔═╗</code>, bold <code>┏━┓</code></li>
-      <li><strong>Markdown mode</strong> — fix diagrams inside code blocks</li>
-      <li><strong>Pipe-friendly</strong> — stdin/stdout, composes with other tools</li>
-      <li><strong>Single binary</strong> — Go, no runtime dependencies</li>
-    </ul>
+      <h2>Features</h2>
+      <ul>
+        <li>
+          <strong>Parses rough ASCII &amp; Unicode</strong> — tolerates
+          misaligned corners, overflowing labels, broken edges
+        </li>
+        <li>
+          <strong>Preserves your layout</strong> — fixes alignment without
+          rearranging boxes
+        </li>
+        <li>
+          <strong>4 box styles</strong> — single <code>┌─┐</code>, rounded
+          <code>╭─╮</code>, double <code>╔═╗</code>, bold <code>┏━┓</code>
+        </li>
+        <li>
+          <strong>Markdown mode</strong> — fix diagrams inside code blocks
+        </li>
+        <li>
+          <strong>Pipe-friendly</strong> — stdin/stdout, composes with other
+          tools
+        </li>
+        <li><strong>Single binary</strong> — Go, no runtime dependencies</li>
+      </ul>
 
-    <h2>Install</h2>
+      <h2>Install</h2>
 
-    <details>
-      <summary>Go</summary>
-      <pre><code>go install github.com/justEstif/bx@latest</code></pre>
-    </details>
+      <details>
+        <summary>Go</summary>
+        <pre><code>go install github.com/justEstif/bx@latest</code></pre>
+      </details>
 
-    <details>
-      <summary>mise</summary>
-<pre><code>mise use -g go:github.com/justEstif/bx@latest
+      <details>
+        <summary>mise</summary>
+        <pre><code>mise use -g go:github.com/justEstif/bx@latest
 mise reshim</code></pre>
-    </details>
+      </details>
 
-    <details>
-      <summary>From source</summary>
-<pre><code>git clone https://github.com/justEstif/bx.git
+      <details>
+        <summary>From source</summary>
+        <pre><code>git clone https://github.com/justEstif/bx.git
 cd bx &amp;&amp; go build -o bx .</code></pre>
-    </details>
+      </details>
 
-    <h2>Usage</h2>
-<pre><code># Fix from stdin
+      <h2>Usage</h2>
+      <pre><code># Fix from stdin
 cat rough.txt | bx fix
 
 # Choose style: single (default), rounded, double, bold
@@ -93,47 +112,52 @@ bx fix --markdown README.md
 # Fix a file directly
 bx fix diagram.txt</code></pre>
 
-    <h2>Styles</h2>
+      <h2>Styles</h2>
 
-    <div class="flex-row flex-wrap:wrap" style="gap: 1rem;">
-      <figure class="flex-grow:1">
-        <figcaption><sub-title class="allcaps">Single<v-h> </v-h></sub-title>(default)</figcaption>
-<pre><code>┌──────┐
+      <div class="flex-row flex-wrap:wrap" style="gap: 1rem">
+        <figure class="flex-grow:1">
+          <figcaption>
+            <sub-title class="allcaps">Single<v-h> </v-h></sub-title>(default)
+          </figcaption>
+          <pre><code>┌──────┐
 │ Auth │
 └──────┘</code></pre>
-      </figure>
-      <figure class="flex-grow:1">
-        <figcaption><sub-title class="allcaps">Rounded</sub-title></figcaption>
-<pre><code>╭──────╮
+        </figure>
+        <figure class="flex-grow:1">
+          <figcaption>
+            <sub-title class="allcaps">Rounded</sub-title>
+          </figcaption>
+          <pre><code>╭──────╮
 │ Auth │
 ╰──────╯</code></pre>
-      </figure>
-      <figure class="flex-grow:1">
-        <figcaption><sub-title class="allcaps">Double</sub-title></figcaption>
-<pre><code>╔══════╗
+        </figure>
+        <figure class="flex-grow:1">
+          <figcaption><sub-title class="allcaps">Double</sub-title></figcaption>
+          <pre><code>╔══════╗
 ║ Auth ║
 ╚══════╝</code></pre>
-      </figure>
-      <figure class="flex-grow:1">
-        <figcaption><sub-title class="allcaps">Bold</sub-title></figcaption>
-<pre><code>┏━━━━━━┓
+        </figure>
+        <figure class="flex-grow:1">
+          <figcaption><sub-title class="allcaps">Bold</sub-title></figcaption>
+          <pre><code>┏━━━━━━┓
 ┃ Auth ┃
 ┗━━━━━━┛</code></pre>
-      </figure>
-    </div>
+        </figure>
+      </div>
 
-    <h2>Why?</h2>
+      <h2>Why?</h2>
 
-    <p>LLMs and humans constantly produce broken ASCII diagrams — misaligned corners,
-    off-by-one edges, inconsistent characters. <code>bx</code> takes that mess and snaps
-    everything into geometrically perfect Unicode box-drawing. Works in terminals
-    and markdown code blocks.</p>
+      <p>
+        LLMs and humans constantly produce broken ASCII diagrams — misaligned
+        corners, off-by-one edges, inconsistent characters.
+        <code>bx</code> takes that mess and snaps everything into geometrically
+        perfect Unicode box-drawing. Works in terminals and markdown code
+        blocks.
+      </p>
+    </main>
 
-  </main>
-
-  <footer>
-    <p><a href="https://github.com/justEstif/bx">GitHub</a> · MIT License</p>
-  </footer>
-
-</body>
+    <footer>
+      <p><a href="https://github.com/justEstif/bx">GitHub</a> · MIT License</p>
+    </footer>
+  </body>
 </html>
