@@ -157,26 +157,7 @@ func getCell(lines [][]rune, r, c int) rune {
 // It's tolerant of slight misalignment: if the top edge gives a width, it also checks
 // content rows for vertical bars that might be slightly off.
 func tryExtractBox(lines [][]rune, r, c int) (ParsedBox, bool) {
-	// Walk right along top edge to find top-right corner
-	// Tolerate non-horizontal chars (like 'v' or '^') embedded in the edge
-	topRight := -1
-	for tc := c + 1; tc < len(lines[r]); tc++ {
-		ch := getCell(lines, r, tc)
-		if isCorner(ch) || ch == '+' {
-			topRight = tc
-			break
-		}
-		if !isHorizontal(ch) && !isArrow(ch) && ch != ' ' {
-			break
-		}
-	}
-	if topRight < 0 || topRight-c < 3 { // minimum box width
-		return ParsedBox{}, false
-	}
-
-	width := topRight - c + 1
-
-	// Walk down from top-left to find bottom-left corner
+	// Walk down from top-left to find bottom-left corner.
 	bottomRow := -1
 	for tr := r + 1; tr < len(lines); tr++ {
 		ch := getCell(lines, tr, c)
@@ -194,37 +175,60 @@ func tryExtractBox(lines [][]rune, r, c int) (ParsedBox, bool) {
 
 	height := bottomRow - r + 1
 
-	// Verify bottom-right corner: check at topRight and nearby columns (tolerance for misalignment)
-	brCol := -1
-	for delta := -2; delta <= 2; delta++ {
-		tc := topRight + delta
-		brch := getCell(lines, bottomRow, tc)
-		if isCorner(brch) || brch == '+' {
-			brCol = tc
-			break
-		}
-	}
-	if brCol < 0 {
-		return ParsedBox{}, false
-	}
-
-	// Use the wider of top/bottom as the actual width
-	actualRight := max(topRight, brCol)
-	width = actualRight - c + 1
-
-	// Verify bottom edge (from c+1 to actualRight-1, tolerant)
-	// Allow horizontal, corners/junctions, arrows, and spaces
-	bottomValid := true
-	for tc := c + 1; tc < actualRight; tc++ {
-		ch := getCell(lines, bottomRow, tc)
+	// Walk right along the top edge looking for a candidate top-right corner.
+	// Some malformed boxes contain stray '+' characters on the top edge, so we
+	// keep scanning until we find the first candidate that also has a matching
+	// bottom-right corner.
+	actualRight := -1
+	for tc := c + 1; tc < len(lines[r]); tc++ {
+		ch := getCell(lines, r, tc)
 		if !isHorizontal(ch) && !isCorner(ch) && ch != ' ' && !isArrow(ch) {
-			bottomValid = false
 			break
 		}
+		if !isCorner(ch) && ch != '+' {
+			continue
+		}
+		if tc-c < 3 { // minimum box width
+			continue
+		}
+
+		// Verify bottom-right corner near this candidate (tolerance for misalignment).
+		brCol := -1
+		for delta := -2; delta <= 2; delta++ {
+			bc := tc + delta
+			brch := getCell(lines, bottomRow, bc)
+			if isCorner(brch) || brch == '+' {
+				brCol = bc
+				break
+			}
+		}
+		if brCol < 0 {
+			continue
+		}
+
+		candidateRight := max(tc, brCol)
+
+		// Verify bottom edge (from c+1 to candidateRight-1, tolerant).
+		bottomValid := true
+		for bc := c + 1; bc < candidateRight; bc++ {
+			bch := getCell(lines, bottomRow, bc)
+			if !isHorizontal(bch) && !isCorner(bch) && bch != ' ' && !isArrow(bch) {
+				bottomValid = false
+				break
+			}
+		}
+		if !bottomValid {
+			continue
+		}
+
+		actualRight = candidateRight
+		break
 	}
-	if !bottomValid {
+	if actualRight < 0 {
 		return ParsedBox{}, false
 	}
+
+	width := actualRight - c + 1
 
 	// Extract label: scan content rows, find vertical bars on each side (with tolerance)
 	var labelParts []string

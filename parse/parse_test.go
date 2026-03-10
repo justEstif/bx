@@ -107,3 +107,31 @@ func TestParseThreeBoxes(t *testing.T) {
 		t.Fatalf("expected at least 2 connections, got %d", len(d.Connections))
 	}
 }
+
+func TestParseBoxWithSplitTopEdge(t *testing.T) {
+	input := `+-------------------+
+| bx test diagram   |
++---------+---------+
+          |
+          v
++---------+---------+
+| install verified  |
++-------------------+`
+
+	d := Parse(input)
+	if len(d.Boxes) != 2 {
+		t.Fatalf("expected 2 boxes, got %d", len(d.Boxes))
+	}
+	if d.Boxes[0].Label != "bx test diagram" {
+		t.Errorf("box 0 label: expected 'bx test diagram', got %q", d.Boxes[0].Label)
+	}
+	if d.Boxes[1].Label != "install verified" {
+		t.Errorf("box 1 label: expected 'install verified', got %q", d.Boxes[1].Label)
+	}
+	if len(d.Connections) != 1 {
+		t.Fatalf("expected 1 connection, got %d", len(d.Connections))
+	}
+	if !d.Connections[0].Arrow {
+		t.Error("expected arrow connection")
+	}
+}
