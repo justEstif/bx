@@ -35,7 +35,7 @@ type Connection struct {
 // anchorPoint returns the (row, col) where a connection attaches to a box side.
 func anchorPoint(b *Box, side Direction) (int, int) {
 	midRow := b.Row + 1 // vertical center (height is always 3)
-	midCol := b.Col + b.Width()/2
+	midCol := b.Col + (b.Width()-1)/2
 	switch side {
 	case Right:
 		return midRow, b.Col + b.Width() // one past the right border
