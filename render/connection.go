@@ -1,7 +1,7 @@
 package render
 
 import (
-	"github.com/estifanos/bx/grid"
+	"github.com/justEstif/bx/grid"
 )
 
 // Direction indicates the side of a box a connection attaches to.

@@ -6,10 +6,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/estifanos/bx/grid"
-	"github.com/estifanos/bx/layout"
-	"github.com/estifanos/bx/parse"
-	"github.com/estifanos/bx/render"
+	"github.com/justEstif/bx/grid"
+	"github.com/justEstif/bx/layout"
+	"github.com/justEstif/bx/parse"
+	"github.com/justEstif/bx/render"
 )
 
 func TestGoldenFiles(t *testing.T) {

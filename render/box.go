@@ -1,7 +1,7 @@
 package render
 
 import (
-	"github.com/estifanos/bx/grid"
+	"github.com/justEstif/bx/grid"
 )
 
 // Box represents a box to render on the grid.

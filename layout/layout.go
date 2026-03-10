@@ -4,8 +4,8 @@ package layout
 import (
 	"sort"
 
-	"github.com/estifanos/bx/parse"
-	"github.com/estifanos/bx/render"
+	"github.com/justEstif/bx/parse"
+	"github.com/justEstif/bx/render"
 )
 
 const (

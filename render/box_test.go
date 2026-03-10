@@ -3,7 +3,7 @@ package render
 import (
 	"testing"
 
-	"github.com/estifanos/bx/grid"
+	"github.com/justEstif/bx/grid"
 )
 
 func TestSingleBox(t *testing.T) {

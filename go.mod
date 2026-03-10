@@ -1,3 +1,3 @@
-module github.com/estifanos/bx
+module github.com/justEstif/bx
 
 go 1.26.1
