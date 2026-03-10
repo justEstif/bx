@@ -23,12 +23,14 @@ jobs:
 
       - name: Build binaries
         run: |
+          VERSION=${{ github.ref_name }}
+          LDFLAGS="-s -w -X main.version=${VERSION}"
           mkdir -p dist
-          GOOS=linux   GOARCH=amd64 go build -o dist/bx-linux-amd64       .
-          GOOS=linux   GOARCH=arm64 go build -o dist/bx-linux-arm64       .
-          GOOS=darwin  GOARCH=amd64 go build -o dist/bx-darwin-amd64      .
-          GOOS=darwin  GOARCH=arm64 go build -o dist/bx-darwin-arm64      .
-          GOOS=windows GOARCH=amd64 go build -o dist/bx-windows-amd64.exe .
+          GOOS=linux   GOARCH=amd64 go build -ldflags "${LDFLAGS}" -o dist/bx-linux-amd64       .
+          GOOS=linux   GOARCH=arm64 go build -ldflags "${LDFLAGS}" -o dist/bx-linux-arm64       .
+          GOOS=darwin  GOARCH=amd64 go build -ldflags "${LDFLAGS}" -o dist/bx-darwin-amd64      .
+          GOOS=darwin  GOARCH=arm64 go build -ldflags "${LDFLAGS}" -o dist/bx-darwin-arm64      .
+          GOOS=windows GOARCH=amd64 go build -ldflags "${LDFLAGS}" -o dist/bx-windows-amd64.exe .
 
       - name: Create release
         env:

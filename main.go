@@ -12,6 +12,8 @@ import (
 	"github.com/justEstif/bx/render"
 )
 
+var version = "dev"
+
 func main() {
 	if len(os.Args) < 2 {
 		printUsage()
@@ -23,6 +25,8 @@ func main() {
 		runFix()
 	case "help", "--help", "-h":
 		printUsage()
+	case "version", "--version", "-v":
+		fmt.Printf("bx %s\n", version)
 	default:
 		fmt.Fprintf(os.Stderr, "unknown command: %s\n", os.Args[1])
 		printUsage()
@@ -40,6 +44,8 @@ Usage:
 Options:
   --style <style>   Box style: single (default), rounded, double, bold
   --markdown        Process fenced codeblocks in a markdown file
+  -h, --help        Show this help
+  -v, --version     Print version
 
 Examples:
   cat diagram.txt | bx fix
@@ -62,6 +68,12 @@ func runFix() {
 			}
 		case "--markdown":
 			markdown = true
+		case "--help", "-h":
+			printUsage()
+			return
+		case "--version", "-v":
+			fmt.Printf("bx %s\n", version)
+			return
 		default:
 			inputFile = args[i]
 		}
