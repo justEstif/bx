@@ -1,0 +1,116 @@
+# Website UI Layout Example
+
+direction: down
+
+header: Header {
+  shape: rectangle
+  style.fill: "#2d3748"
+  style.font-color: "#ffffff"
+
+  logo: "🏠 MyApp" {
+    shape: text
+  }
+  nav: Navigation {
+    shape: rectangle
+    style.fill: "#4a5568"
+    style.font-color: "#ffffff"
+
+    home: Home { shape: text }
+    about: About { shape: text }
+    pricing: Pricing { shape: text }
+    login: "Log In" {
+      shape: rectangle
+      style.fill: "#4299e1"
+      style.font-color: "#ffffff"
+      style.border-radius: 4
+    }
+
+    home -> about -> pricing -> login: {style.stroke-dash: 0; style.opacity: 0}
+  }
+
+  logo -> nav: { style.opacity: 0 }
+}
+
+main: Main Content {
+  shape: rectangle
+  style.fill: "#f7fafc"
+
+  direction: right
+
+  sidebar: Sidebar {
+    shape: rectangle
+    style.fill: "#edf2f7"
+    width: 200
+
+    menu: "Menu" {
+      shape: rectangle
+      style.fill: "#e2e8f0"
+      dashboard: "📊 Dashboard" { shape: text }
+      settings: "⚙️ Settings" { shape: text }
+      profile: "👤 Profile" { shape: text }
+      reports: "📄 Reports" { shape: text }
+
+      dashboard -> settings -> profile -> reports: { style.opacity: 0 }
+    }
+  }
+
+  content: Content Area {
+    shape: rectangle
+    style.fill: "#ffffff"
+
+    hero: Hero Section {
+      shape: rectangle
+      style.fill: "#ebf8ff"
+
+      title: "Welcome to MyApp" { shape: text; style.font-size: 24 }
+      subtitle: "Build something great today" { shape: text; style.font-size: 14 }
+      cta: "Get Started →" {
+        shape: rectangle
+        style.fill: "#4299e1"
+        style.font-color: "#ffffff"
+        style.border-radius: 8
+      }
+
+      title -> subtitle -> cta: { style.opacity: 0 }
+    }
+
+    cards: Feature Cards {
+      shape: rectangle
+      style.fill: "#ffffff"
+      direction: right
+
+      card1: "⚡ Fast" {
+        shape: rectangle
+        style.fill: "#f0fff4"
+        style.border-radius: 8
+      }
+      card2: "🔒 Secure" {
+        shape: rectangle
+        style.fill: "#fff5f5"
+        style.border-radius: 8
+      }
+      card3: "📱 Responsive" {
+        shape: rectangle
+        style.fill: "#fffff0"
+        style.border-radius: 8
+      }
+    }
+
+    hero -> cards: { style.opacity: 0 }
+  }
+
+  sidebar -> content: { style.opacity: 0 }
+}
+
+footer: Footer {
+  shape: rectangle
+  style.fill: "#2d3748"
+  style.font-color: "#ffffff"
+
+  copyright: "© 2026 MyApp. All rights reserved." { shape: text }
+  links: "Privacy | Terms | Contact" { shape: text }
+
+  copyright -> links: { style.opacity: 0 }
+}
+
+header -> main -> footer
